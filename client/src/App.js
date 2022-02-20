@@ -10,13 +10,13 @@ class App extends Component {
 
   componentDidMount = async () => {
     try {
-      // Get network provider and web3 instance.
+      // 네트워크 공급자 및 web3 인스턴스를 가져옵니다.
       const web3 = await getWeb3();
 
-      // Use web3 to get the user's accounts.
+      // web3를 사용하여 사용자 계정을 가져옵니다.
       const accounts = await web3.eth.getAccounts();
 
-      // Get the contract instance.
+      // 계약 인스턴스를 가져옵니다.
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = SimpleStorageContract.networks[networkId];
       const instance = new web3.eth.Contract(
@@ -24,13 +24,12 @@ class App extends Component {
         deployedNetwork && deployedNetwork.address
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
+      // web3, 계정, 컨트랙트를 상태로 설정한 후 컨트랙트의 메소드와 상호작용하는 예제를 진행합니다.
       this.setState({ web3, accounts, contract: instance }, this.runExample);
     } catch (error) {
-      // Catch any errors for any of the above operations.
+      // 위의 작업에 대한 오류를 포착합니다.
       alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
+        `web3, 계정 또는 계약을 로드하지 못했습니다. 자세한 내용은 콘솔을 확인하십시오.`
       );
       console.error(error);
     }
@@ -39,34 +38,25 @@ class App extends Component {
   runExample = async () => {
     const { accounts, contract } = this.state;
 
-    // Stores a given value, 5 by default.
+    // 기본적으로 5인 주어진 값을 저장합니다.
     await contract.methods.set(5).send({ from: accounts[0] });
 
-    // Get the value from the contract to prove it worked.
+    // 계약에서 가치를 가져와 작동했음을 증명합니다.
     const response = await contract.methods.get().call();
 
-    // Update state with the result.
+    // 결과로 상태를 업데이트합니다.
     this.setState({ storageValue: response });
   };
 
   render() {
     if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+      return <div>기다려봐 좀</div>;
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 42</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
-        <Kimchi></Kimchi>
+        <h1>도레미파솔리디티</h1>
+        안녕 우리 투표하자
+        <Kimchi />
       </div>
     );
   }

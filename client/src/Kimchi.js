@@ -5,6 +5,8 @@ function Kimchi() {
   const [candidateName, setCandidateName] = useState(""); // 등록할 후보자 이름
   const [candidateAge, setCandidateAge] = useState(""); // 등록할 후보자 나이
 
+  console.log(candidateName);
+  console.log(candidateAge);
   const registration = async () => {
     console.log("aaaaaa");
     // const { accounts, contract } = this.state;
@@ -29,7 +31,6 @@ function Kimchi() {
 
   return (
     <div>
-      너 내가 누군지 아니
       <div>
         <div>후보자 등록</div>
         <input
