@@ -134,6 +134,7 @@ contract Voting {
                     candidateList[_number - 1].name
                 )
             );
+            // 역대 대통령 목록이 있으면
             if (presidentialList.length > 1) {
                 // 임기 종료일에 시간 기록
                 presidentialList[presidentNum - 2].expiration = block.timestamp;
@@ -146,7 +147,7 @@ contract Voting {
                     .presidentialTerm = (expiration - electedDay);
             }
             // 당선자에게 당선 번호 부여
-            elected[msg.sender] = presidentNum;
+            elected[candidateList[_number - 1].candidateAddress] = presidentNum;
 
             /* 새로운 대선 준비 */
             // 후보자, 투표자 목록 비우기
