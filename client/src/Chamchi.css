@@ -1,0 +1,41 @@
+.boundary {
+  margin: 20px auto;
+  width: 60%;
+}
+.vote_box {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 95%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+.vote_box-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.candidate_list {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  height: 100%;
+}
+.candidate_list-box {
+  margin: 0 5px;
+  /* min-width: 10%; */
+  width: 100%;
+}
+.photo_box {
+  border: 1px solid black;
+  height: 80%;
+  width: 100%;
+}
+
+.candidate_list-box-button {
+  width: 80px;
+  height: 30px;
+}
