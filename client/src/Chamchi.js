@@ -1,6 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Chamchi.css";
 import axios from "axios";
+import No1 from "./images/1.png";
+import No2 from "./images/2.png";
+import No3 from "./images/3.png";
+import No4 from "./images/4.png";
+import No5 from "./images/5.png";
 
 function Chamchi() {
   const [candidateName, setCandidateName] = useState(""); // 등록할 후보자 이름
@@ -16,11 +21,16 @@ function Chamchi() {
   return (
     <div>
       <hr className="boundary" />
+      <div className="juseok">
+        ※ 사진에 나온 인물들은 모두 가상의 인물들입니다
+      </div>
       <div className="vote_box">
         <div className="vote_box-title">후보자 명단</div>
         <div className="candidate_list">
           <div className="candidate_list-box">
-            <div className="photo_box">사진</div>
+            <div className="photo_box">
+              <img src={No1} />
+            </div>
             <div>(후보명)</div>
             <div>(나이)</div>
             <div>(현재득표수)</div>
@@ -33,7 +43,9 @@ function Chamchi() {
             </button>
           </div>
           <div className="candidate_list-box">
-            <div className="photo_box">사진</div>
+            <div className="photo_box">
+              <img src={No2} />
+            </div>
             <div>(후보명)</div>
             <div>(나이)</div>
             <div>(현재득표수)</div>
@@ -46,7 +58,9 @@ function Chamchi() {
             </button>
           </div>
           <div className="candidate_list-box">
-            <div className="photo_box">사진</div>
+            <div className="photo_box">
+              <img src={No3} />
+            </div>
             <div>(후보명)</div>
             <div>(나이)</div>
             <div>(현재득표수)</div>
@@ -59,7 +73,9 @@ function Chamchi() {
             </button>
           </div>
           <div className="candidate_list-box">
-            <div className="photo_box">사진</div>
+            <div className="photo_box">
+              <img src={No4} />
+            </div>
             <div>(후보명)</div>
             <div>(나이)</div>
             <div>(현재득표수)</div>
@@ -72,7 +88,9 @@ function Chamchi() {
             </button>
           </div>
           <div className="candidate_list-box">
-            <div className="photo_box">사진</div>
+            <div className="photo_box">
+              <img src={No5} />
+            </div>
             <div>(후보명)</div>
             <div>(나이)</div>
             <div>(현재득표수)</div>
