@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import BackgroundSound from "./BackgroundSound";
 import "./Kimchi.css";
-import axios from "axios";
 
 function Kimchi() {
   const [candidateName, setCandidateName] = useState(""); // 등록할 후보자 이름
@@ -59,6 +59,7 @@ function Kimchi() {
           후보등록하기
         </button>
       </div>
+      <BackgroundSound />
     </div>
   );
 }

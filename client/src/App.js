@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
-
 import "./App.css";
 import Kimchi from "./Kimchi";
+import Chamchi from "./Chamchi";
+import TeamName from "./TeamName";
 
 class App extends Component {
   state = { storageValue: 0, web3: null, accounts: null, contract: null };
@@ -54,9 +55,9 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>도레미파솔리디티</h1>
-        안녕 우리 투표하자
+        <TeamName />
         <Kimchi />
+        <Chamchi />
       </div>
     );
   }

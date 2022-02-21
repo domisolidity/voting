@@ -1,3 +1,9 @@
+.sound_box {
+  position: fixed;
+  top: 55px;
+  left: 20px;
+  border-radius: 15px;
+}
 .registration-box {
   padding: 10px;
   border: 1px solid black;
