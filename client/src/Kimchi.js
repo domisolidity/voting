@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import "./Kimchi.css";
 import axios from "axios";
 
 function Kimchi() {
@@ -7,6 +8,7 @@ function Kimchi() {
 
   console.log(candidateName);
   console.log(candidateAge);
+
   const registration = async () => {
     console.log("aaaaaa");
     // const { accounts, contract } = this.state;
@@ -31,23 +33,31 @@ function Kimchi() {
 
   return (
     <div>
-      <div>
-        <div>후보자 등록</div>
-        <input
-          placeholder="후보자의 이름을 입력하세요"
-          onChange={(e) => {
-            setCandidateName(e.target.value);
-          }}
-          value={candidateName}
-        />
-        <input
-          placeholder="후보자의 이름을 입력하세요"
-          onChange={(e) => {
-            setCandidateAge(e.target.value);
-          }}
-          value={candidateAge}
-        />
-        <button onClick={registration}>후보등록하기</button>
+      <div className="registration-box">
+        <div className="registration-title">후보자 등록</div>
+        <div className="candidate_input-box">
+          <div>후보명</div>
+          <input
+            placeholder="예) 고란이"
+            onChange={(e) => {
+              setCandidateName(e.target.value);
+            }}
+            value={candidateName}
+          />
+        </div>
+        <div className="candidate_input-box">
+          <div>나이</div>
+          <input
+            placeholder="예) 78351"
+            onChange={(e) => {
+              setCandidateAge(e.target.value);
+            }}
+            value={candidateAge}
+          />
+        </div>
+        <button className="registration-button" onClick={registration}>
+          후보등록하기
+        </button>
       </div>
     </div>
   );
