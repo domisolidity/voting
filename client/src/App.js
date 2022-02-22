@@ -3,8 +3,8 @@ import VotingContract from "./contracts/Voting.json";
 import Top from "./components/top/Top"
 import Registration from "./components/registration/Registration"
 import getWeb3 from "./getWeb3";
-
-import "./App.css";
+import { getwebState } from "./redux/actions";
+import { useDispatch } from "react-redux";
 
 const App = () => {
 
@@ -12,6 +12,12 @@ const App = () => {
   const [userAccount, setuserAccount] = useState(null);
   const [voting, setVoting] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getwebState())
+  }, [dispatch])
 
   useEffect(() => {
     async function checkAPI() {
@@ -61,12 +67,13 @@ const App = () => {
 
   return (
     <>
+      <Top />
+      <br />
       {
         !loading ?
-          <div>Loading Web3, accounts, and contract...</div>
+          <div>메타마스크에 연결되지 않았어요. 연결이 필요합니다.</div>
           :
           <>
-            <Top />
             <Registration />
           </>
       }
