@@ -9,7 +9,8 @@ contract Vote {
     State public voteState;
 
     event completeRegist(uint8 candidateNum, string name, uint8 age, uint8 receivedVote, address addr);
-    
+    event Step(State _state);
+
     struct Candidate {
         uint8 candidateNum;
         string name;
@@ -22,7 +23,7 @@ contract Vote {
     uint index;
     uint voteCount = 1;
 
-    // mapping(uint => Candidate) public candidates;
+    mapping(uint => Candidate) public candidateToNum;
     Candidate[]  public candidates;
     Candidate public electedCandidate;
 
@@ -30,16 +31,24 @@ contract Vote {
     mapping(address => uint8) public isVote; // private로?
 
     constructor() public {
+        admin = msg.sender;
         voteState = State.Registering;
+        emit Step(voteState);
     }
 
 
+    modifier onlyAdmin(){
+        require(msg.sender == admin);
+        _;
+    }
+
     // @ 후보등록
     function register(string memory _name, uint8 _age) public {
-        // require(msg.value == 5 * 10 ** 15);
+        // require(msg.value == 5 * 10 ** 14,"gas is over");
         require(voteState == State.Registering,"Registration has closed.");
         require(isRegist[msg.sender] == false, "already registered.");
 
+        // admin.transfer(5 * 10 ** 14);
         candidates.push(Candidate(uint8(index), _name, _age, 0, msg.sender));
 
         isRegist[msg.sender] = true;
@@ -47,8 +56,9 @@ contract Vote {
         emit completeRegist(candidates[index].candidateNum, _name, _age, 0, msg.sender);
         
         index++;
-        if(index==5) {
+        if(index==2) {
             voteState = State.Voting;
+            emit Step(voteState); // step 이벤트 실행
         }
     }
 
@@ -60,32 +70,44 @@ contract Vote {
         candidates[_selectNum - 1].receivedVote += 1;
         isVote[msg.sender] = 0;
 
-        if(candidates[_selectNum-1].receivedVote == 10) {
+        if(candidates[_selectNum-1].receivedVote == 2) {
             voteState = State.Ended;
+            emit Step(voteState); // step 이벤트 실행 
             electedCandidate = candidates[_selectNum - 1];
-            for(uint i=0; i <= candidates.length; i++) {
-                candidates.pop();
-            }
             index = 0;
         }
     }
 
     // 후보 투표수 보기
-    function getCandidateReceivedVote(uint _selectNum) public view returns(uint8) {
+    function getCandidateReceivedVote(uint _selectNum) external view returns(uint8) {
         Candidate memory candidate = candidates[_selectNum - 1];
         return candidate.receivedVote;
     }
 
+    // 모든 후보자 보기
+    function getCandidate() external view returns(Candidate[] memory) {
+        Candidate[] memory allCandidates = new Candidate[](index);
+        for (uint8 i = 0; i < index; i++) {
+            Candidate storage candidate = candidateToNum[i]; 
+            allCandidates[i] = candidate;
+        }
+        return allCandidates;
+    }
 
     // 당선자 보기
-    function getElectedCandidate() public view returns(Candidate memory) {
+    function getElectedCandidate() external view returns(Candidate memory) {
         return electedCandidate;
     }
 
     // 후보 등록 시작
-    function startElect() public { // ! onlyOwner추가하기
-      require(voteState == State.Ended);
-      voteState = State.Registering;
+    function startElect() external onlyAdmin{ // ! onlyOwner추가하기
+        require(voteState == State.Ended);
+        for(uint i=0; i <= candidates.length; i++) {
+                candidates.pop();
+            }
+        index = 0;
+        voteState = State.Registering; // '후보등록 step'으로 변경
+        emit Step(voteState); // step 이벤트 실행
     }
 }
 
