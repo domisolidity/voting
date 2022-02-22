@@ -1,73 +1,77 @@
-import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import React, { useCallback, useEffect, useState } from "react";
+import VotingContract from "./contracts/Voting.json";
+import Top from "./components/top/Top"
+import Registration from "./components/registration/Registration"
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
 
-class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+const App = () => {
 
-  componentDidMount = async () => {
-    try {
-      // Get network provider and web3 instance.
-      const web3 = await getWeb3();
+  const [web3, setWeb3] = useState(null);
+  const [userAccount, setuserAccount] = useState(null);
+  const [voting, setVoting] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-      // Use web3 to get the user's accounts.
-      const accounts = await web3.eth.getAccounts();
-
-      // Get the contract instance.
-      const networkId = await web3.eth.net.getId();
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
-      const instance = new web3.eth.Contract(
-        SimpleStorageContract.abi,
-        deployedNetwork && deployedNetwork.address,
-      );
-
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
-    } catch (error) {
-      // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
-      );
-      console.error(error);
+  useEffect(() => {
+    async function checkAPI() {
+      try {
+        await checkUpEnv();
+        await setLoading(true);
+      } catch (error) {
+        if (error === "MetamskNeeds") {
+          alert(
+            `Download link:metamask`,
+          );
+        } else {
+          console.log(error);
+          alert(
+            `Failed to load web3, accounts, or contract. Check console for details.`,
+          );
+        }
+      }
     }
-  };
+    checkAPI();
+  }, [])
 
-  runExample = async () => {
-    const { accounts, contract } = this.state;
+  const checkUpEnv = useCallback(async () => {
 
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
+    let web3;
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
-
-    // Update state with the result.
-    this.setState({ storageValue: response });
-  };
-
-  render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
+    if (window.ethereum) {
+      web3 = await getWeb3();
+      setWeb3(web3);
+    } else {
+      throw "MetamskNeeds";
     }
-    return (
-      <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 42</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
-      </div>
-    );
-  }
+
+    let users = await web3.eth.getAccounts();
+    await setuserAccount(users[0]);
+    await deployContracts(web3, users);
+  }, [])
+
+  const deployContracts = useCallback(async (web3, users) => {
+    let networkId = await web3.eth.net.getId();
+    let voting = await new web3.eth.Contract(
+      VotingContract.abi,
+      VotingContract.networks[networkId] && VotingContract.networks[networkId].address,
+    )
+    await setVoting(voting);
+  }, [])
+
+  return (
+    <>
+      {
+        !loading ?
+          <div>Loading Web3, accounts, and contract...</div>
+          :
+          <>
+            <Top />
+            <Registration />
+          </>
+      }
+    </>
+  )
 }
 
 export default App;

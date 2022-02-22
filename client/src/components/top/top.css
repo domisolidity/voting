@@ -1,0 +1,34 @@
+.team_name {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
+  font-size: 28px;
+  font-weight: bold;
+}
+.dot {
+  margin: 0 5px;
+}
+.do {
+  color: red;
+}
+.re {
+  color: orange;
+}
+.mi {
+  color: rgb(235, 235, 0);
+}
+.fa {
+  color: yellowgreen;
+}
+.so {
+  color: skyblue;
+}
+.li {
+  color: blue;
+}
+.di {
+  color: darkslateblue;
+}
+.ty {
+  color: blueviolet;
+}
