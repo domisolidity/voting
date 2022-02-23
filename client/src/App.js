@@ -25,6 +25,10 @@ const App = () => {
       const web3 = await getWeb3();
       // web3를 사용하여 사용자 계정을 가져옵니다.
       const accounts = await web3.eth.getAccounts();
+
+      console.log(accounts);
+      // Get the contract instance.
+      
       const networkId = await web3.eth.net.getId();
       const deployedNetwork = await VoteContract.networks[networkId];
       // 계약 인스턴스를 가져옵니다.
