@@ -28,7 +28,7 @@ const Main_Ended = (props) => {
     if (adminAddress === accounts[0]) {
       await voteContract.methods
         .startVote()
-        .call()
+        .send({ from: accounts[0] })
         //.then(console.log(await voteContract.methods.voteState()))
         .catch((err) => console.error(err));
 
