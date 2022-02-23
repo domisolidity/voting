@@ -98,10 +98,6 @@ contract Vote {
         emit Step(voteState); // step 이벤트 실행
         electedCandidate = candidates[_selectNum - 1];
         index = 0;
-        // 선거가 끝났으니 후보들 중복출마 기능 해제
-        for (uint256 i = 0; i < candidates.length; i++) {
-            isRegist[candidates[0].addr] = false;
-        }
     }
 
     // @ 후보 투표수 보기
@@ -127,6 +123,10 @@ contract Vote {
     // @ 후보 등록 시작
     function startVote() external onlyAdmin {
         require(voteState == State.Ended);
+        // 선거가 끝났으니 후보들 중복출마 기능 해제
+        for (uint256 i = 0; i < candidates.length; i++) {
+            isRegist[candidates[0].addr] = false;
+        }
         for (uint256 i = 0; i < candidates.length; i++) {
             candidates.pop();
         }
