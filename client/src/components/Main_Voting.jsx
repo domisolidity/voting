@@ -65,8 +65,8 @@ const Main_Voting = (props) => {
                       />
                     </div>
                     <div>{candidate.name}</div>
-                    <div>{candidate.age}</div>
-                    <div>{candidate.receivedVote}</div>
+                    <div>{candidate.age} 세</div>
+                    <div>{candidate.receivedVote} 표 획득 중!</div>
                     <button
                       value={candidate.candidateNum}
                       className="candidate_list-box-button"
