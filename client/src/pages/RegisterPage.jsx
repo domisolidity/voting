@@ -6,6 +6,7 @@ const RegisterPage = (props) => {
 
   const [name, setName] = useState("");
   const [age, setAge] = useState(0);
+  const myRegistrationFee = "30";
   const [status, setStatus] = useState(0);
 
   const handleName = (e) => {
@@ -43,10 +44,11 @@ const RegisterPage = (props) => {
     await web3.eth.getTransactionCount(accounts[0], (err, txCount) => {
       console.log(txCount);
     });
-    let result = await voteContract.methods
-      .register(name, age)
-      .send({ from: accounts[0] });
-    console.log(result);
+    let result = await voteContract.methods.register(name, age).send({
+      from: accounts[0],
+      value: web3.utils.toWei(myRegistrationFee, "ether"),
+    });
+    alert(`${name} 후보가 등록되었읍니다`);
   };
   return (
     <>
@@ -71,7 +73,12 @@ const RegisterPage = (props) => {
             후보등록하기
           </button>
         </div>
+        <div style={{ fontSize: "13px", textAlign: "center" }}>
+          후보등록에는 고작 {myRegistrationFee}이더(ETH)만 있으면 됩니다
+        </div>
       </div>
+
+      <div></div>
     </>
   );
 };
