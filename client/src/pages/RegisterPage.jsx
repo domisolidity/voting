@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = (props) => {
+  const navigate = useNavigate();
+
   const { web3, voteContract, accounts } = props.initialization;
 
   const [name, setName] = useState("");
@@ -47,7 +50,8 @@ const RegisterPage = (props) => {
       from: accounts[0],
       value: web3.utils.toWei(myRegistrationFee, "ether"),
     });
-    alert(`${name} 후보가 등록되었읍니다`);
+    alert(`${name} 후보가 등록되었읍니다. 메인으로 이동합니다.`);
+    navigate("/");
   };
   return (
     <>
