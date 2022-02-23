@@ -46,12 +46,20 @@ const RegisterPage = (props) => {
     await web3.eth.getTransactionCount(accounts[0], (err, txCount) => {
       console.log(txCount);
     });
-    let result = await voteContract.methods.register(name, age).send({
-      from: accounts[0],
-      value: web3.utils.toWei(myRegistrationFee, "ether"),
-    });
-    alert(`${name} 후보가 등록되었읍니다. 메인으로 이동합니다.`);
-    navigate("/");
+    let result = await voteContract.methods
+      .register(name, age)
+      .send({
+        from: accounts[0],
+        value: web3.utils.toWei(myRegistrationFee, "ether"),
+      })
+      .then(() =>
+        alert(`${name} 후보가 등록되었읍니다. 메인페이지로 이동합니다.`)
+      )
+      .then(() => navigate("/"))
+      .catch((err) => {
+        alert("이미 후보 등록 하셨습니다.");
+        console.error(err);
+      });
   };
   return (
     <>
