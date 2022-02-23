@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = (props) => {
+  const navigate = useNavigate();
+
   const { web3, voteContract, accounts } = props.initialization;
 
   const [name, setName] = useState("");
@@ -43,14 +46,20 @@ const RegisterPage = (props) => {
     await web3.eth.getTransactionCount(accounts[0], (err, txCount) => {
       console.log(txCount);
     });
-    let result = await voteContract.methods.register(name, age).send({
-      from: accounts[0],
-      value: web3.utils.toWei(myRegistrationFee, "ether"),
-    }).then(()=> alert(`${name} 후보가 등록되었읍니다`))
-    .catch(err=> {
-      alert("이미 후보 등록 하셨습니다.")
-      console.error(err)
-    })
+    let result = await voteContract.methods
+      .register(name, age)
+      .send({
+        from: accounts[0],
+        value: web3.utils.toWei(myRegistrationFee, "ether"),
+      })
+      .then(() =>
+        alert(`${name} 후보가 등록되었읍니다. 메인페이지로 이동합니다.`)
+      )
+      .then(() => navigate("/"))
+      .catch((err) => {
+        alert("이미 후보 등록 하셨습니다.");
+        console.error(err);
+      });
   };
   return (
     <>
