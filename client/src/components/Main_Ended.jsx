@@ -21,6 +21,10 @@ const Main_Ended = (props) => {
       })
       .catch(console.error);
   };
+
+  const reStart = async () => {
+    console.log("다시 시작하자");
+  };
   return (
     <>
       {!isView ? (
@@ -41,6 +45,7 @@ const Main_Ended = (props) => {
               나이 : <span>{age_E}</span> <br />
             </div>
           </div>
+          <button onClick={reStart}>선거 다시 시작하기</button>
         </div>
       )}
     </>
