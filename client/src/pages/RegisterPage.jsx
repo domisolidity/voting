@@ -33,9 +33,7 @@ const RegisterPage = (props) => {
       alert("당신 나이가 그게 사람입니까?");
       return;
     } else if (age < 8) {
-      alert(
-        "영유아 및 어린이는 등록할 수 없습니다. 적어도 초등학교는 들어가야 선거에 참여하실 수 있읍니다"
-      );
+      alert("적어도 초등학교는 들어가야 선거에 참여하실 수 있읍니다");
       return;
     }
 
