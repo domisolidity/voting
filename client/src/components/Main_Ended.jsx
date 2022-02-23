@@ -14,7 +14,7 @@ const Main_Ended = (props) => {
       .electedCandidate()
       .call()
       .then((result) => {
-        setCandidateNum_E("5");
+        setCandidateNum_E(result.candidateNum);
         setName_E(result.name);
         setAge_E(result.age);
         setIsView(true);
