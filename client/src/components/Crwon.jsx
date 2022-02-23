@@ -9,8 +9,8 @@ const Crwon = (props) => {
         <img
           style={{
             position: "absolute",
-            top: "14%",
-            left: "39%",
+            top: "9%",
+            left: "25%",
             transform: "translate(-50%, -50%) rotate(-35deg)",
             width: "100px",
           }}
@@ -20,8 +20,8 @@ const Crwon = (props) => {
         <img
           style={{
             position: "absolute",
-            top: "16%",
-            left: "55%",
+            top: "14%",
+            left: "60%",
             transform: "translate(-50%, -50%) rotate(40deg)",
             width: "100px",
           }}
@@ -31,8 +31,8 @@ const Crwon = (props) => {
         <img
           style={{
             position: "absolute",
-            top: "16%",
-            left: "53%",
+            top: "12%",
+            left: "58%",
             transform: "translate(-50%, -50%) rotate(15deg)",
             width: "100px",
           }}
@@ -42,8 +42,8 @@ const Crwon = (props) => {
         <img
           style={{
             position: "absolute",
-            top: "8%",
-            left: "40%",
+            top: "-5%",
+            left: "30%",
             transform: "translate(-50%, -50%) rotate(-15deg)",
             width: "150px",
           }}
@@ -53,10 +53,10 @@ const Crwon = (props) => {
         <img
           style={{
             position: "absolute",
-            top: "12%",
-            left: "53%",
-            transform: "translate(-50%, -50%) rotate(10deg)",
-            width: "150px",
+            top: "11%",
+            left: "58%",
+            transform: "translate(-50%, -50%) rotate(15deg)",
+            width: "50px",
           }}
           src={require("../images/crwon.png")}
         />

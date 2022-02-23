@@ -14,7 +14,7 @@ const Main_Ended = (props) => {
       .electedCandidate()
       .call()
       .then((result) => {
-        setCandidateNum_E(result.candidateNum);
+        setCandidateNum_E("5");
         setName_E(result.name);
         setAge_E(result.age);
         setIsView(true);
@@ -37,7 +37,7 @@ const Main_Ended = (props) => {
         <div className="vote_box">
           <div className="candidate_list">
             <div className="candidate_list-box">
-              <div className="photo_box">
+              <div className="president_photo_box">
                 <img src={require("../images/" + candidateNum_E + ".png")} />
                 <Crwon candidateNum_E={candidateNum_E} />
               </div>
