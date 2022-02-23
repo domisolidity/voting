@@ -1,16 +1,18 @@
-import { INIT } from "../actions";
+import { AUTH } from "../actions";
 
-let initialState = { web3: null, instance: null, account: null }
+let initialState = { web3: null, instance: null, voteContract: null, account: null, auth: false }
 
 export default function (state = initialState, action) {
   switch (action.type) {
-    case INIT:
-      let { web3, instance, account } = action
+    case AUTH:
+      let { web3, instance, voteContract, account } = action
       return {
         ...state,
         web3,
         instance,
-        account
+        voteContract,
+        account,
+        auth: true,
       }
     default:
       return state;

@@ -30,12 +30,12 @@ contract Voting {
 
     event candiateListInfo(uint256 indexed _index, Candidate);
     
-    function registerCandidate(string memory _name, uint256 _age, address payable _to) public payable{
+    function registerCandidate(string memory _name, uint256 _age) public payable{
         require(candiateList.length < 5 , "Registration is no longer available.");
-        require(msg.value == 10000000000000000000,"Amount is wrong. Check your money.");
+        //require(msg.value == 10000000000000000000,"Amount is wrong. Check your money.");
 
-        (bool sent, ) = _to.call{value: msg.value}("");
-        require(sent, "Failled" );
+        // (bool sent, ) = _to.call{value: msg.value}("");
+        // require(sent, "Failled" );
   
         candiateList.push(Candidate(_name,_age));
     }
