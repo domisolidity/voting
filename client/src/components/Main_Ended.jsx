@@ -29,8 +29,9 @@ const Main_Ended = (props) => {
     <>
       {!isView ? (
         <>
-          <div>투표가 종료되었습니다.</div>
-          <button onClick={getElectedCandidate}>투표결과 확인하기</button>
+          <button className="result_button" onClick={getElectedCandidate}>
+            투표결과 확인하기
+          </button>
         </>
       ) : (
         <div className="vote_box">

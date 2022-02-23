@@ -1,38 +1,51 @@
 .sound_box {
-    position: fixed;
-    top: 55px;
-    left: 20px;
-    border-radius: 15px;
-  }
-  
-  .registration-box {
-    padding: 10px;
-    border: 1px solid black;
-    border-radius: 10px;
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-  }
-  .registration-title {
-    margin-bottom: 10px;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  .candidate_input-box {
-    display: flex;
-    margin: 5px 0;
-    width: 100%;
-  }
-  .candidate_input-box :nth-child(1) {
-    width: 40%;
-  }
-  .candidate_input-box :nth-child(2) {
-    width: 60%;
-  }
-  
-  .registration-button {
-    width: 120px;
-    height: 30px;
-  }
+  position: fixed;
+  top: 55px;
+  left: 20px;
+  border-radius: 15px;
+}
+.step_box {
+  margin-left: 50px;
+}
+.result_button {
+  width: 300px;
+  height: 50px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+.registration-box {
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+.registration-title {
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+.candidate_input-box {
+  display: flex;
+  margin: 5px 0;
+  width: 100%;
+}
+.candidate_input-box :nth-child(1) {
+  width: 40%;
+}
+.candidate_input-box :nth-child(2) {
+  width: 60%;
+}
+
+.registration-button {
+  width: 120px;
+  height: 30px;
+}
