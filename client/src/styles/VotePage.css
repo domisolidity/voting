@@ -67,3 +67,8 @@
   width: 120px;
   height: 30px;
 }
+
+.restart {
+  display: flex;
+  flex-direction: row;
+}

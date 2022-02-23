@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Crwon from "./Crwon";
 
 const Main_Ended = (props) => {
-  const { voteContract, accounts } = props.initialization;
+  const { voteContract } = props.initialization;
 
   const [candidateNum_E, setCandidateNum_E] = useState(0);
   const [name_E, setName_E] = useState("");
@@ -20,23 +20,6 @@ const Main_Ended = (props) => {
         setIsView(true);
       })
       .catch((err) => console.error(err));
-  };
-
-  const reStart = async () => {
-    const adminAddress = await voteContract.methods.admin().call(); //배포자 계정
-
-    if (adminAddress === accounts[0]) {
-      await voteContract.methods
-        .startVote()
-        .call()
-        //.then(console.log(await voteContract.methods.voteState()))
-        .catch((err) => console.error(err));
-
-      console.log(await voteContract.methods.startVote().call());
-      console.log(await voteContract.methods.voteState().call());
-    } else {
-      alert("관리자가 아니네요. 관리자에게 문의 하세요!");
-    }
   };
 
   return (
@@ -60,7 +43,6 @@ const Main_Ended = (props) => {
               나이 : <span>{age_E}</span> <br />
             </div>
           </div>
-          <button onClick={reStart}>선거 다시 시작하기</button>
         </div>
       )}
     </>
