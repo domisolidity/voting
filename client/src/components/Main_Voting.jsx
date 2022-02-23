@@ -1,11 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../styles/Candidate.css";
-import No1 from "../images/0.png";
-import No2 from "../images/1.png";
-import No3 from "../images/2.png";
-import No4 from "../images/3.png";
-import No5 from "../images/4.png";
-
 
 const Main_Voting = (props) => {
   const {web3, voteContract, accounts, isLoading} = props.initialization;
@@ -32,6 +26,7 @@ const Main_Voting = (props) => {
     console.log("투표하기 e.target.value : ", e.target.value)
     await voteContract.methods.vote(e.target.value).send({from: accounts[0]})
       .then(voteResult => console.log(voteResult))
+      .catch(alert("이미 투표하셨습니다."))
     
     await voteContract.methods.getCandidateReceivedVote(e.target.value).call()
     .then(result=> { setReceivedVote(result)});
@@ -58,7 +53,7 @@ const Main_Voting = (props) => {
                   </div>
                   <div>{candidate.name}</div>
                   <div>{candidate.age}</div>
-                  <div>{candidate.receivedVote > receivedVote ? candidate.receivedVote : receivedVote}</div>
+                  <div>{candidate.receivedVote}</div>
                   <button
                     value={candidate.candidateNum}
                     className="candidate_list-box-button"
