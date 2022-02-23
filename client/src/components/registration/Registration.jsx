@@ -6,13 +6,13 @@ import { useSelector } from "react-redux";
 function Registration() {
   const [candidateName, setCandidateName] = useState(""); // 등록할 후보자 이름
   const [candidateAge, setCandidateAge] = useState(""); // 등록할 후보자 나이
+  const [fee, setFee] = useState("10"); // 후보자 등록시 지불비용
 
   const web3 = useSelector((state) => state.web3.web3);
   const voteContract = useSelector((state) => state.web3.voteContract);
-  //const instance = useSelector((state) => state.web3.instance);
-  console.log(web3);
+
+  console.log(web3.utils.toWei(fee, "ether"));
   console.log(voteContract);
-  //console.log(instance.methods);
 
   const getCandidateName = (e) => {
     setCandidateName(e.target.value);
@@ -27,14 +27,22 @@ function Registration() {
   const registration = async () => {
     let accounts = await web3.eth.getAccounts();
     console.log(accounts[0]);
+
     await web3.eth.getTransactionCount(accounts[0], (err, txCount) => {
       console.log(err);
+      console.log(txCount);
     });
+
     let result = await voteContract.methods
-      .registerCandidate(candidateName, candidateAge)
-      .send({ from: accounts[0] });
+      .registerCandidate(
+        candidateName,
+        candidateAge,
+        "0xACa94ef8bD5ffEE41947b4585a84BdA5a3d3DA6E"
+      )
+      .send({ from: accounts[0], value: web3.utils.toWei(fee, "ether") });
     console.log(result);
   };
+
   const getList = async () => {
     let accounts = await web3.eth.getAccounts();
     console.log(accounts[0]);

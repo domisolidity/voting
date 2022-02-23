@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
-import VotingContract from "./contracts/Voting.json";
+//import VotingContract from "./contracts/Voting.json";
 import Top from "./components/top/Top"
 import Registration from "./components/registration/Registration"
-import getWeb3 from "./getWeb3";
+//import getWeb3 from "./getWeb3";
 import { getwebState } from "./redux/actions";
 import { useDispatch } from "react-redux";
 import { useSelector } from 'react-redux';
@@ -11,7 +11,7 @@ const App = () => {
 
   //const [web3, setWeb3] = useState(null);
   //const [userAccount, setuserAccount] = useState(null);
-  const [voting, setVoting] = useState(null);
+  //const [voting, setVoting] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const App = () => {
     function checkAuth() {
       if (AuthReducer) {
         setLoading(true);
+        return;
       }
     }
     checkAuth()
