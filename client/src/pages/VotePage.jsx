@@ -50,7 +50,11 @@ const Vote = (props) => {
     return (
       <>
         <Step step={step} />
-        <Main_Ended step={step} initialization={props.initialization} />
+        <Main_Ended
+          step={step}
+          currentStep={currentStep}
+          initialization={props.initialization}
+        />
       </>
     );
   }
