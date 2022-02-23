@@ -36,6 +36,7 @@ contract Vote {
     Candidate public electedCandidate;
     mapping(uint256 => Candidate) public candidateToNum;
 
+    uint256 voters; // 투표자 수 기록용
     uint256 index; // 후보 등록 시 기호번호 지정 용도
     // uint voteCount = 1;
 
@@ -84,6 +85,7 @@ contract Vote {
 
         candidates[_selectNum - 1].receivedVote += 1;
         voterList.push(msg.sender);
+        voters++;
 
         // 당선됐을때(해당 후보의 득표수가 충족될 때)
         if (candidates[_selectNum - 1].receivedVote == 2) {
@@ -97,7 +99,6 @@ contract Vote {
         voteState = State.Ended;
         emit Step(voteState); // step 이벤트 실행
         electedCandidate = candidates[_selectNum - 1];
-        index = 0;
     }
 
     // @ 후보 투표수 보기
@@ -125,15 +126,16 @@ contract Vote {
         require(voteState == State.Ended);
         // 선거가 끝났으니 후보들 중복출마 기능 해제
         for (uint256 i = 0; i < candidates.length; i++) {
-            isRegist[candidates[0].addr] = false;
+            isRegist[candidates[i].addr] = false;
         }
-        for (uint256 i = 0; i < candidates.length; i++) {
+        for (uint256 i = 0; i < index; i++) {
             candidates.pop();
         }
-        for (uint256 i = 0; i < voterList.length; i++) {
+        for (uint256 i = 0; i < voters; i++) {
             voterList.pop();
         }
         index = 0;
+        voters = 0;
         voteState = State.Registering;
         emit Step(voteState); // step 이벤트 실행
     }
