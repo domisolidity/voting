@@ -1,73 +1,69 @@
-import React, { Component } from "react";
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import VoteContract from "./contracts/Vote.json";
 import getWeb3 from "./getWeb3";
 
 import "./App.css";
+import Vote from "./pages/VotePage";
+import Register from "./pages/RegisterPage";
+import Step from './components/Step';
 
-class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+import Title from "./components/Title";
 
-  componentDidMount = async () => {
+const App = () => {
+  const [web3, setWeb3] = useState()
+  const [accounts, setAccounts] = useState()
+  const [voteContract, setVoteContract] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+
+  const init = async () => {
+    setIsLoading(true);
     try {
-      // Get network provider and web3 instance.
+      console.log("유즈이펙트1")
+      // 네트워크 공급자 및 web3 인스턴스를 가져옵니다.
       const web3 = await getWeb3();
-
-      // Use web3 to get the user's accounts.
+      // web3를 사용하여 사용자 계정을 가져옵니다.
       const accounts = await web3.eth.getAccounts();
+
       console.log(accounts);
       // Get the contract instance.
+      
       const networkId = await web3.eth.net.getId();
-      const deployedNetwork = SimpleStorageContract.networks[networkId];
-      const instance = new web3.eth.Contract(
-        SimpleStorageContract.abi,
+      const deployedNetwork = await VoteContract.networks[networkId];
+      // 계약 인스턴스를 가져옵니다.
+      const voteContract = await new web3.eth.Contract(
+        VoteContract.abi,
         deployedNetwork && deployedNetwork.address,
       );
 
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
-      this.setState({ web3, accounts, contract: instance }, this.runExample);
+      setWeb3(web3);
+      setAccounts(accounts);
+      setVoteContract(voteContract);
+      setIsLoading(false);
+      console.log("유즈이펙트");
     } catch (error) {
-      // Catch any errors for any of the above operations.
-      alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`,
-      );
+      alert(`Failed to load web3, accounts, or contract. Check console for details.`);
       console.error(error);
     }
-  };
-
-  runExample = async () => {
-    const { accounts, contract } = this.state;
-
-    // Stores a given value, 5 by default.
-    await contract.methods.set(5).send({ from: accounts[0] });
-
-    // Get the value from the contract to prove it worked.
-    const response = await contract.methods.get().call();
-
-    // Update state with the result.
-    this.setState({ storageValue: response });
-  };
-
-  render() {
-    if (!this.state.web3) {
-      return <div>Loading Web3, accounts, and contract...</div>;
-    }
-    return (
-      <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
-        </p>
-        <p>
-          Try changing the value stored on <strong>line 42</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
-      </div>
-    );
   }
+
+  useEffect(async () => {
+    init();
+  }, [])
+
+  const initialization = { web3, accounts, voteContract, isLoading }
+
+  return (
+    <BrowserRouter>
+      <Title />
+      <Routes>
+        {console.log("페이지")}
+        <Route path="/" exact element={<Vote initialization={initialization} />}></Route>
+        <Route path="/register" exact element={<Register initialization={initialization} />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App;
+export default App
