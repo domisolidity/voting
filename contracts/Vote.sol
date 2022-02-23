@@ -71,7 +71,7 @@ contract Vote {
         emit completeRegist(uint8(index + 1), _name, _age, 0, msg.sender);
 
         index++;
-        if (index == 1) {
+        if (index == 5) {
             voteState = State.Voting;
             emit Step(voteState); // step 이벤트 실행
         }
@@ -86,7 +86,7 @@ contract Vote {
         voterList.push(msg.sender);
 
         // 당선됐을때(해당 후보의 득표수가 충족될 때)
-        if (candidates[_selectNum - 1].receivedVote == 1) {
+        if (candidates[_selectNum - 1].receivedVote == 2) {
             // 당선함수 실행
             isElected(_selectNum);
         }
