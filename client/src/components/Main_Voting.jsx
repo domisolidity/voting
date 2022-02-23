@@ -10,6 +10,7 @@ const Main_Voting = (props) => {
   useEffect(() => {
     console.log("유즈이펙트3");
     if (voteContract == undefined) return;
+    getAllCandidates();
   }, [voteContract, props.step]);
 
   const getAllCandidates = async () => {
@@ -53,29 +54,27 @@ const Main_Voting = (props) => {
           <div className="vote_box-title">후보자 명단</div>
           <div className="candidate_list">
             {allCandidate &&
-              allCandidate.map((candidate) => {
+              allCandidate.map((candidate, index) => {
                 return (
-                  <>
-                    <div className="candidate_list-box">
-                      <div className="photo_box">
-                        <img
-                          src={require("../images/" +
-                            candidate.candidateNum +
-                            ".png")}
-                        />
-                      </div>
-                      <div>{candidate.name}</div>
-                      <div>{candidate.age}</div>
-                      <div>{candidate.receivedVote}</div>
-                      <button
-                        value={candidate.candidateNum}
-                        className="candidate_list-box-button"
-                        onClick={submitVote}
-                      >
-                        투표하기
-                      </button>
+                  <div className="candidate_list-box" key={index}>
+                    <div className="photo_box">
+                      <img
+                        src={require("../images/" +
+                          candidate.candidateNum +
+                          ".png")}
+                      />
                     </div>
-                  </>
+                    <div>{candidate.name}</div>
+                    <div>{candidate.age} 세</div>
+                    <div>{candidate.receivedVote} 표 획득 중!</div>
+                    <button
+                      value={candidate.candidateNum}
+                      className="candidate_list-box-button"
+                      onClick={submitVote}
+                    >
+                      투표하기
+                    </button>
+                  </div>
                 );
               })}
           </div>
