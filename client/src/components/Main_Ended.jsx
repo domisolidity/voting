@@ -1,24 +1,22 @@
 import React, {useState} from 'react'
-import No1 from "../images/1.png";
-import No2 from "../images/2.png";
-import No3 from "../images/3.png";
-import No4 from "../images/4.png";
-import No5 from "../images/5.png";
 
 const Main_Ended = (props) => {
-  const {voteContract, accounts , isLoading} = props.initialization;
+  const {voteContract} = props.initialization;
 
-  const [electedCandidate, setElectedCaindated] = useState();
+  const [candidateNum_E, setCandidateNum_E] = useState(0);
+  const [name_E, setName_E] = useState("");
+  const [age_E, setAge_E] = useState(0);
   const [isView, setIsView] = useState(false)
   
   const getElectedCandidate = async() =>{
-      await voteContract.methods.getElectedCandidate().call()
-      .then(result => setElectedCaindated(result))
-      .then(setIsView(true))
+      await voteContract.methods.electedCandidate().call()
+      .then(result => {
+        setCandidateNum_E(result.candidateNum)
+        setName_E(result.name)
+        setAge_E(result.age)
+        setIsView(true)
+      })
       .catch(console.error);
-
-
-    
   }
   return (
     <>
@@ -32,10 +30,11 @@ const Main_Ended = (props) => {
               <div className="candidate_list">
                 <div className="candidate_list-box">
                   <div className="photo_box">
-                    <img src={No1} />
+                    <img src={require('../images/'+ candidateNum_E + '.png')} />
                   </div>
-                  <div>(후보명)</div>
-                  <div>(나이)</div>
+                  기호 번호 : <span>{candidateNum_E}</span> <br/>
+                  후보명 : <span>{name_E}</span> <br/>
+                  나이 : <span>{age_E}</span> <br/>
                 </div>
               </div>
             </div>

@@ -5,12 +5,17 @@ pragma experimental ABIEncoderV2;
 
 contract Vote {
 
+    // 투표 단계 지정
     enum State {Registering, Voting, Ended}
     State public voteState;
 
     event completeRegist(uint8 candidateNum, string name, uint8 age, uint8 receivedVote, address addr);
     event Step(State _state);
-
+    
+    // 관리자
+    address public admin;    
+    
+    // 후보자 구조체
     struct Candidate {
         uint8 candidateNum;
         string name;
@@ -18,25 +23,24 @@ contract Vote {
         uint8 receivedVote;
         address addr;
     }
-    address public admin;
-
-    uint index;
-    uint voteCount = 1;
-
-    mapping(uint => Candidate) public candidateToNum;
     Candidate[]  public candidates;
     Candidate public electedCandidate;
+    mapping(uint => Candidate) public candidateToNum;
+
+    uint index; // 후보 등록 시 기호번호 지정 용도
+    // uint voteCount = 1;
 
     mapping(address => bool) public isRegist; // private로?
     mapping(address => uint8) public isVote; // private로?
 
+    // 초기 설정
     constructor() public {
         admin = msg.sender;
         voteState = State.Registering;
         emit Step(voteState);
     }
 
-
+    // 어드민 권한 함수 제어자
     modifier onlyAdmin(){
         require(msg.sender == admin);
         _;
@@ -49,11 +53,11 @@ contract Vote {
         require(isRegist[msg.sender] == false, "already registered.");
 
         // admin.transfer(5 * 10 ** 14);
-        candidates.push(Candidate(uint8(index), _name, _age, 0, msg.sender));
+        candidates.push(Candidate(uint8(index+1), _name, _age, 0, msg.sender));
 
         isRegist[msg.sender] = true;
 
-        emit completeRegist(candidates[index].candidateNum, _name, _age, 0, msg.sender);
+        emit completeRegist(uint8(index+1), _name, _age, 0, msg.sender);
         
         index++;
         if(index==2) {
@@ -78,35 +82,30 @@ contract Vote {
         }
     }
 
-    // 후보 투표수 보기
+    // @ 후보 투표수 보기
     function getCandidateReceivedVote(uint _selectNum) external view returns(uint8) {
         Candidate memory candidate = candidates[_selectNum - 1];
         return candidate.receivedVote;
     }
 
-    // 모든 후보자 보기
-    function getCandidate() external view returns(Candidate[] memory) {
-        Candidate[] memory allCandidates = new Candidate[](index);
-        for (uint8 i = 0; i < index; i++) {
-            Candidate storage candidate = candidateToNum[i]; 
-            allCandidates[i] = candidate;
-        }
-        return allCandidates;
+    // @ 모든 후보자 보기
+    function getCandidate() public view returns(Candidate[] memory) {
+        return candidates;
     }
 
-    // 당선자 보기
+    // @ 당선자 보기
     function getElectedCandidate() external view returns(Candidate memory) {
         return electedCandidate;
     }
 
-    // 후보 등록 시작
-    function startElect() external onlyAdmin{ // ! onlyOwner추가하기
+    // @ 후보 등록 시작
+    function startElect() external onlyAdmin{ 
         require(voteState == State.Ended);
         for(uint i=0; i <= candidates.length; i++) {
                 candidates.pop();
             }
         index = 0;
-        voteState = State.Registering; // '후보등록 step'으로 변경
+        voteState = State.Registering; 
         emit Step(voteState); // step 이벤트 실행
     }
 }
