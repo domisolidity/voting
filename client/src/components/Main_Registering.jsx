@@ -1,15 +1,14 @@
-import React from 'react'
+import React from "react";
 import { Link } from "react-router-dom";
 
-
 const Main_Registering = () => {
-
   return (
     <>
-      <div>후보 등록 중입니다.</div>
-      <Link  to="/register">후보 등록 페이지로 이동</Link>
+      <Link className="register_button" to="/register">
+        후보 등록 하러 가기
+      </Link>
     </>
-  )
-}
+  );
+};
 
-export default Main_Registering
+export default Main_Registering;
