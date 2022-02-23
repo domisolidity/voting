@@ -1,8 +1,5 @@
 .App {
   text-align: center;
-  background-color: aqua;
-  /* background: rgb(155,166,168);
-  background: linear-gradient(0deg, rgba(155,166,168,1) 17%, rgba(222,227,226,1) 100%); */
 }
 
 .App-logo {
@@ -10,7 +7,7 @@
 }
 
 .App-header {
-  /* background-color: #282c34; */
+  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
