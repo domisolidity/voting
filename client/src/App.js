@@ -52,13 +52,13 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Title />
-      <Routes>
-        {console.log("페이지")}
-        <Route path="/" exact element={<Vote initialization={initialization} />}></Route>
-        <Route path="/register" exact element={<Register initialization={initialization} />}></Route>
-      </Routes>
-    </BrowserRouter>
+        <Title />
+        <Routes>
+          {console.log("페이지")}
+          <Route path="/" exact element={<Vote initialization={initialization} />}></Route>
+          <Route path="/register" exact element={<Register initialization={initialization} />}></Route>
+        </Routes>
+      </BrowserRouter>
   );
 }
 
