@@ -26,8 +26,11 @@ const Main_Voting = (props) => {
     console.log("투표하기 e.target.value : ", e.target.value)
     await voteContract.methods.vote(e.target.value).send({from: accounts[0]})
       .then(voteResult => console.log(voteResult))
-      .catch(alert("이미 투표하셨습니다."))
-    
+      .catch(err=>{
+        alert("이미 투표하셨습니다.");
+        console.error(err);
+       })
+      
     await voteContract.methods.getCandidateReceivedVote(e.target.value).call()
     .then(result=> { setReceivedVote(result)});
 

@@ -46,8 +46,11 @@ const RegisterPage = (props) => {
     let result = await voteContract.methods.register(name, age).send({
       from: accounts[0],
       value: web3.utils.toWei(myRegistrationFee, "ether"),
-    });
-    alert(`${name} 후보가 등록되었읍니다`);
+    }).then(()=> alert(`${name} 후보가 등록되었읍니다`))
+    .catch(err=> {
+      alert("이미 후보 등록 하셨습니다.")
+      console.error(err)
+    })
   };
   return (
     <>
