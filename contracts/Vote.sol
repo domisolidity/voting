@@ -85,11 +85,22 @@ contract Vote {
         candidates[_selectNum - 1].receivedVote += 1;
         voterList.push(msg.sender);
 
+        // 당선됐을때(해당 후보의 득표수가 충족될 때)
         if (candidates[_selectNum - 1].receivedVote == 2) {
-            voteState = State.Ended;
-            emit Step(voteState); // step 이벤트 실행
-            electedCandidate = candidates[_selectNum - 1];
-            index = 0;
+            // 당선함수 실행
+            isElected(_selectNum);
+        }
+    }
+
+    // @ 당선함수
+    function isElected(uint256 _selectNum) public {
+        voteState = State.Ended;
+        emit Step(voteState); // step 이벤트 실행
+        electedCandidate = candidates[_selectNum - 1];
+        index = 0;
+        // 선거가 끝났으니 후보들 중복출마 기능 해제
+        for (uint256 i = 0; i < candidates.length; i++) {
+            isRegist[candidates[0].addr] = false;
         }
     }
 
@@ -114,9 +125,9 @@ contract Vote {
     }
 
     // @ 후보 등록 시작
-    function startElect() external onlyAdmin {
+    function startVote() external onlyAdmin {
         require(voteState == State.Ended);
-        for (uint256 i = 0; i <= candidates.length; i++) {
+        for (uint256 i = 0; i < candidates.length; i++) {
             candidates.pop();
         }
         index = 0;
