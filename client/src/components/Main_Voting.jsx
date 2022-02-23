@@ -19,6 +19,14 @@ const Main_Voting = (props) => {
       .call()
       .then((result) => setAllCandidate(result));
   };
+  // 당선되면 당선페이지로 넘기는 녀석
+  useEffect(() => {
+    for (let i = 0; i < allCandidate.length; i++) {
+      if (allCandidate[i].receivedVote == 2) {
+        props.currentStep();
+      }
+    }
+  }, [allCandidate]);
 
   const submitVote = async (e) => {
     console.log("투표하기 e.target.value : ", e.target.value);

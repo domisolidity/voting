@@ -43,7 +43,11 @@ const Vote = (props) => {
     return (
       <>
         <Step step={step} />
-        <Main_Voting step={step} initialization={props.initialization} />
+        <Main_Voting
+          step={step}
+          currentStep={currentStep}
+          initialization={props.initialization}
+        />
       </>
     );
   } else {
