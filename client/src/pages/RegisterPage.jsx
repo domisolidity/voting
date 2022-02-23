@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Title from "../components/Title";
 
 const RegisterPage = (props) => {
   const { web3, voteContract, accounts } = props.initialization;
@@ -52,7 +51,6 @@ const RegisterPage = (props) => {
   };
   return (
     <>
-      <Title />
       <h1>Register-page</h1>
       <div>
         <div className="registration-box">
