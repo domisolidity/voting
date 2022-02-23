@@ -130,6 +130,9 @@ contract Vote {
         for (uint256 i = 0; i < candidates.length; i++) {
             candidates.pop();
         }
+        for (uint256 i = 0; i < voterList.length; i++) {
+            voterList.pop();
+        }
         index = 0;
         voteState = State.Registering;
         emit Step(voteState); // step 이벤트 실행
