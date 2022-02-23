@@ -29,7 +29,9 @@ const Main_Ended = (props) => {
       await voteContract.methods
         .startVote()
         .send({ from: accounts[0] })
-        //.then(console.log(await voteContract.methods.voteState()))
+        .then((res) => {
+          props.currentStep();
+        })
         .catch((err) => console.error(err));
 
       console.log(await voteContract.methods.startVote().call());
