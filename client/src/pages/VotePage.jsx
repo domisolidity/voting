@@ -21,7 +21,7 @@ const Vote = (props) => {
       console.log("11111111");
       setStep("투표 진행중");
     } else if (getStep == 2) {
-      setStep("진행중인 투표가 없습니다.");
+      setStep("투표가 종료되었습니다.");
     }
   };
 
