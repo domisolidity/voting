@@ -116,11 +116,6 @@ contract Vote {
         return candidates;
     }
 
-    // @ 당선자 보기
-    function getElectedCandidate() external view returns (Candidate memory) {
-        return electedCandidate;
-    }
-
     // @ 후보 등록 시작
     function startVote() external onlyAdmin {
         require(voteState == State.Ended);
