@@ -13,14 +13,14 @@
 #         run: echo "Hello"             # Run을 통한 스크립트 실행: Hello 출력
         
 name: React build
-on: 
-  push:                               # master Branch에서 push 이벤트가 일어났을 때만 실행
-    branches:
-      - main
+on: [push]
+#   push:                               # master Branch에서 push 이벤트가 일어났을 때만 실행
+#     branches:
+#       - main
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: windows-latest
     steps:
       - name: Checkout source code.   # 레포지토리 체크아웃
         uses: actions/checkout@master
