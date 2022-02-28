@@ -17,7 +17,7 @@ name: front-dev-deploy
 
 on:
   push: # 적용될 액션
-    branches: develop # 적용될 브랜치
+    branches: main # 적용될 브랜치
     paths:
       - 'client/**' # workflow에서 적용될 path
 
