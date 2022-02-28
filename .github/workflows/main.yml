@@ -13,43 +13,34 @@
 #         run: echo "Hello"             # Run을 통한 스크립트 실행: Hello 출력
 
 
+name: front-dev-deploy
 
-name: Production Build
 on:
-  pull_request:
-  push:
-    branches:
-      - main
+  push: # 적용될 액션
+    branches: develop # 적용될 브랜치
+    paths:
+      - 'client/**' # workflow에서 적용될 path
+
+defaults:
+  run:
+    working-directory: ./client # workflow에서 default working directory
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [8.x, 10.x, 12.x]
-
+  deploy:
+    runs-on: ubuntu-latest # 인스턴스 OS
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Yarn Install
-        run: |
-          yarn install
-      - name: Production Build
-        run: |
-          yarn build
-      - name: Unit Tests
-        run: |
-          yarn test
-      - name: Deploy to S3
-        uses: jakejarvis/s3-sync-action@master
-        with:
-          args: --acl public-read --delete
+      - name: Checkout source code
+        uses: actions/checkout@v2 # 워크플로에서 액세스할 수 있도록 에서 저장소를 체크아웃
+
+      - name: Install Dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
+      - name: S3 Deploy
+        run: aws s3 sync ./dist s3:::www.doremifasolidity-kdw.com --acl bucket-owner-full-control # s3 이름 2021-cvi-dev
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-          SOURCE_DIR: "build"
