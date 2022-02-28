@@ -3,6 +3,12 @@ name: deploy-to-s3-example
 on: 
   push:
     branches: [ main ]
+    paths:
+      - 'client/**' # workflow에서 적용될 path
+
+defaults:
+  run:
+    working-directory: ./client # workflow에서 default working directory
 
 jobs: 
   build: 
