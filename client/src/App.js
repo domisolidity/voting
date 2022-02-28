@@ -59,6 +59,7 @@ const App = () => {
       <Title />
       <Routes>
         {console.log("페이지")}
+        <div>아마존 바꾼 버전</div>
         <Route path="/" exact element={<Vote initialization={initialization} />}></Route>
         <Route path="/register" exact element={<Register initialization={initialization} />}></Route>
       </Routes>
