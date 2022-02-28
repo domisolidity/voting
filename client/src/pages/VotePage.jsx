@@ -40,6 +40,7 @@ const Vote = (props) => {
   if (step == "후보 등록중") {
     return (
       <>
+      <div>aws</div>
         <Step step={step} />
         <Main_Registering step={step} initialization={props.initialization} />
       </>
@@ -47,6 +48,7 @@ const Vote = (props) => {
   } else if (step == "투표 진행중") {
     return (
       <>
+      <div>aws</div>
         <Step step={step} />
         <Main_Voting
           step={step}
@@ -61,6 +63,7 @@ const Vote = (props) => {
     }
     return (
       <>
+      <div>aws</div>
         <Step step={step} />
         <Main_Ended
           step={step}
