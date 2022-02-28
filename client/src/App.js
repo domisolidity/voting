@@ -24,7 +24,7 @@ const App = () => {
       // 네트워크 공급자 및 web3 인스턴스를 가져옵니다.
       const web3 = await getWeb3();
       // web3를 사용하여 사용자 계정을 가져옵니다.
-      const accounts = await web3.eth.getAccounts();
+      const accounts = await web3.eth.getAccounts(); 
 
       console.log(accounts);
       // Get the contract instance.

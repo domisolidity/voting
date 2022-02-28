@@ -6,11 +6,16 @@ import Main_Voting from "../components/Main_Voting";
 import Main_Ended from "../components/Main_Ended";
 
 const Vote = (props) => {
-  const [selectNum, setSelectNum] = useState(0);
+
   const [step, setStep] = useState("");
 
-  const { voteContract, accounts, isLoading } = props.initialization;
+  const { voteContract } = props.initialization;
 
+  let state = {
+    state1: <div>후보등록 중</div>,
+    state2: <div>투표 중</div>,
+    state3: <div>투표 종료</div>
+  }
   // 진행 단계 가져오기
   const currentStep = async () => {
     const getStep = await voteContract.methods.voteState().call();
@@ -51,6 +56,9 @@ const Vote = (props) => {
       </>
     );
   } else {
+    if (step == 0) {
+      
+    }
     return (
       <>
         <Step step={step} />
