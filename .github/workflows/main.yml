@@ -11,70 +11,45 @@
 
 #       - name: echo Hello              # Step 이름
 #         run: echo "Hello"             # Run을 통한 스크립트 실행: Hello 출력
-        
-name: React build
-on: [push]
-#   push:                               # master Branch에서 push 이벤트가 일어났을 때만 실행
-#     branches:
-#       - main
 
+
+
+name: Production Build
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [8.x, 10.x, 12.x]
+
     steps:
-      - name: Checkout source code.   # 레포지토리 체크아웃
-        uses: actions/checkout@main
-
-      - name: Cache node modules      # node modules 캐싱
-        uses: actions/cache@v1
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
-
-      - name: Install Dependencies    # 의존 파일 설치
-        run: npm install
-
-      - name: Build                   # React Build
-        run: npm run build
-
-
-# name: React build
-# on: 
-#   push:                               # master Branch에서 push 이벤트가 일어났을 때만 실행
-#     branches:
-#       - main
-
-# jobs:
-#   build:
-#     runs-on: ubuntu-18.04
-#     steps:
-#       - name: Checkout source code.   # 레포지토리 체크아웃
-#         uses: actions/checkout@master
-
-#       - name: Cache node modules      # node modules 캐싱
-#         uses: actions/cache@v1
-#         with:
-#           path: node_modules
-#           key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
-#           restore-keys: |
-#             ${{ runner.OS }}-build-
-#             ${{ runner.OS }}-
-
-#       - name: Install Dependencies    # 의존 파일 설치
-#         run: npm install
-
-#       - name: Build                   # React Build
-#         run: npm run build
-
-#       - name: Deploy                  # S3에 배포하기
-#         env:
-#           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#         run: |
-#           aws s3 cp \
-#             --recursive \
-#             --region ap-northeast-2 \
-#             build s3:::www.doremifasolidity-kdw.com 
+          node-version: ${{ matrix.node-version }}
+      - name: Yarn Install
+        run: |
+          yarn install
+      - name: Production Build
+        run: |
+          yarn build
+      - name: Unit Tests
+        run: |
+          yarn test
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: "build"
