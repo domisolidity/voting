@@ -4,9 +4,9 @@ on:
   push:
     branches: [ main ]
 
-defaults:
-  run:
-    working-directory: ./client # workflow에서 default working directory
+# defaults:
+#   run:
+#     working-directory: ./client # workflow에서 default working directory
 
 jobs: 
   build: 
@@ -15,9 +15,18 @@ jobs:
       - name: git clone
         uses: actions/checkout@v2
 
+      - name: truffle install
+        run: npm install truffle
+      
+      - name: truffle migrate
+        run: truffle migrate
+        
+      - name: move client
+        run: cd client
+      
       - name: npm install
-        run: npm install 
-
+        run: npm install
+        
       - name: build
         run: npm run build
       
